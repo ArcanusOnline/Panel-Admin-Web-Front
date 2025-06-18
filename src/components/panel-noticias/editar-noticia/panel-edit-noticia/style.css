@@ -1,0 +1,134 @@
+.panel-edit-noticia-container {
+  background: linear-gradient(to bottom right, #1a0000, #330000, #4d0000);
+  color: #f9f9f9;
+  min-height: 100vh;
+  padding: 40px 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.link-volver {
+  color: #ff6666;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 18px;
+  margin-bottom: 25px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.link-volver:hover {
+  color: #ff1a1a;
+}
+
+.titulo-principal {
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #ff9999;
+}
+
+.form-editar-noticia {
+  background-color: #330000;
+  border: 2px solid #660000;
+  border-radius: 12px;
+  padding: 25px 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #ff9999;
+}
+
+.input-text,
+.input-textarea {
+  background-color: #4d0000;
+  border: 1.5px solid #660000;
+  border-radius: 8px;
+  color: #f9f9f9;
+  padding: 10px 14px;
+  font-size: 16px;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.input-text:focus,
+.input-textarea:focus {
+  outline: none;
+  border-color: #ff6666;
+  box-shadow: 0 0 8px #ff6666;
+}
+
+.btn-group {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.btn-guardar,
+.btn-cancelar {
+  padding: 10px 22px;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #ff6666;
+  background-color: transparent;
+  color: #ff6666;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-guardar:hover {
+  background-color: #ff6666;
+  color: #1a0000;
+}
+
+.btn-cancelar:hover {
+  background-color: #b33a3a;
+  border-color: #b33a3a;
+  color: #f9f9f9;
+}
+
+.no-datos-container {
+  background: #330000;
+  color: #ff6666;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 20px;
+  text-align: center;
+}
+
+.no-datos-container p {
+  margin-bottom: 20px;
+}
+
+.btn-volver {
+  padding: 10px 22px;
+  background-color: transparent;
+  border: 2px solid #ff6666;
+  border-radius: 10px;
+  color: #ff6666;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #ff6666;
+  color: #1a0000;
+}

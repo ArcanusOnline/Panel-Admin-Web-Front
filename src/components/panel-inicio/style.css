@@ -1,0 +1,72 @@
+.panel-container {
+  min-height: 100vh;
+  background: linear-gradient(to right, #1a0000, #4b0000, #8b0000);
+  color: #fefefe;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.panel-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #ff4d4d;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.panel-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.panel-link-item {
+  background-color: #2d0000;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+
+.panel-link-item:hover {
+  background-color: #4d0000;
+}
+
+.panel-link {
+  text-decoration: none;
+  color: #ffb3b3;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.panel-link:hover {
+  color: #ffffff;
+}
+
+.panel-error {
+  color: #ff6666;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.panel-logout-button {
+  padding: 14px 28px;
+  background-color: #8b0000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.panel-logout-button:hover {
+  background-color: #a30000;
+}

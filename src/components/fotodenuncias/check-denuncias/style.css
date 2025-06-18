@@ -1,0 +1,140 @@
+p > span {
+  color: black;
+}
+
+/* Tipografía general */
+
+.panel-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.admin-back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.admin-back-link:hover {
+  color: #3730a3;
+}
+
+.insulto-list {
+  margin-bottom: 1.5rem;
+}
+
+.insulto-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.nombre-clickable {
+  cursor: pointer;
+  color: #2563eb;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.nombre-clickable:hover {
+  color: #1d4ed8;
+}
+
+.estado-pena {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.estado-pena label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 0.25rem;
+}
+
+.estado-pena input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f3f4f6;
+}
+
+.motivos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.motivo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.motivo-item.personalizado input[type="text"],
+.motivo-item.personalizado input[type="number"] {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.motivo-item input[type="radio"],
+.motivo-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #4f46e5;
+}
+
+.acciones-panel {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.acciones-panel button {
+  padding: 0.6rem 1.2rem;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.acciones-panel button:hover {
+  background-color: #4338ca;
+}
+
+.hidden {
+  display: none;
+}
+p,
+label,
+span,
+li,
+input,
+button {
+  color: #1f2937;
+}

@@ -1,0 +1,13 @@
+export { Login } from "./login";
+export { PanelInicio } from "./panel-inicio";
+export { AdministracionUsuarios } from "./panel-administrador";
+export { PanelNoticias } from "./panel-noticias";
+export { AgregarRoles } from "./panel-administrador/agregar-roles";
+export { EliminarRoles } from "./panel-administrador/eliminar-roles";
+export { AgregarNoticia } from "./panel-noticias/agregar-noticia";
+export { EditarNoticia } from "./panel-noticias/editar-noticia";
+export { PanelEditNoticia } from "./panel-noticias/editar-noticia/panel-edit-noticia";
+export { PanelSoporte } from "./panel-soporte";
+export { ResponderSoporte } from "./panel-soporte/responder-soporte";
+export {Fotodenuncias} from "./fotodenuncias"
+export {CheckeoDenuncias} from "./fotodenuncias/check-denuncias"

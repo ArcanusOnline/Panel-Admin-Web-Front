@@ -1,0 +1,74 @@
+.editar-noticia-container {
+  background: linear-gradient(to bottom right, #1a0000, #330000, #4d0000);
+  color: #f9f9f9;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.link-volver {
+  color: #ff6666;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 18px;
+  margin-bottom: 25px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.link-volver:hover {
+  color: #ff1a1a;
+}
+
+.noticia-item {
+  background-color: #330000;
+  border: 1.5px solid #660000;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.noticia-item:hover {
+  box-shadow: 0 0 15px #ff4d4d;
+  border-color: #ff4d4d;
+}
+
+.titulo-noticia {
+  font-weight: 700;
+  font-size: 18px;
+  color: #ff9999;
+  margin: 0;
+  max-width: 75%;
+  word-break: break-word;
+}
+
+.link-editar {
+  color: #ff6666;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 2px solid #ff6666;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link-editar:hover,
+.link-editar.active {
+  background-color: #ff6666;
+  color: #1a0000;
+}
+
+.mensaje-error {
+  color: #ff6666;
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 30px;
+  text-align: center;
+}
