@@ -55,6 +55,19 @@ const ResponderSoporte = () => {
     }
   }
 
+  function formatearFecha(fechaIso) {
+    const fecha = new Date(fechaIso);
+
+    const dia = String(fecha.getDate()).padStart(2, "0");
+    const mes = String(fecha.getMonth() + 1).padStart(2, "0"); // enero = 0
+    const año = fecha.getFullYear();
+
+    const horas = String(fecha.getHours()).padStart(2, "0");
+    const minutos = String(fecha.getMinutes()).padStart(2, "0");
+
+    return `${dia}/${mes}/${año} - ${horas}:${minutos}`;
+  }
+
   return (
     <>
       <div>
@@ -90,13 +103,9 @@ const ResponderSoporte = () => {
                   }`}
                 >
                   <div>
-                    <h3>{`${elem.responde} - ${new Date(
-                      state.fecha_cambio_estado
-                    ).toLocaleString("es-AR", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })}`}</h3>
+                    <h3>{`${elem.responde} - ${formatearFecha(elem.fecha)} - ${
+                      elem.ip_address
+                    }`}</h3>
                     <p className="mensaje-texto">
                       {elem.censura === "CENSURADO"
                         ? `(MENSAJE CENSURADO)\n${elem.texto}`
