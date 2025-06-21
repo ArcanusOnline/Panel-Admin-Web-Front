@@ -1,5 +1,6 @@
 import { traerFotodenuncias } from "../../querys/scripts";
 import { useState, useEffect } from "react";
+import { checkRoles } from "../../utils/checkRoles";
 import { useNavigate, Outlet, useLocation, Link } from "react-router";
 import "./style.css";
 
@@ -12,6 +13,11 @@ const Fotodenuncias = () => {
   let checkeo = location.pathname.endsWith("check-denuncia");
 
   useEffect(() => {
+    let roles = checkRoles();
+    if (!roles || !roles.includes(1)) {
+      navigate("/inicio");
+      return;
+    }
     async function cargarFotodenuncias() {
       let data = await traerFotodenuncias();
       if (data.error === 1) {
@@ -71,11 +77,7 @@ const Fotodenuncias = () => {
                     >
                       <td>{elem.ID}</td>
                       <td>{elem.Usuario}</td>
-                      <td>
-                        {elem.estado !== 1
-                          ? "Sin Leer"
-                          : "Leida"}
-                      </td>
+                      <td>{elem.estado !== 1 ? "Sin Leer" : "Leida"}</td>
                       <td>{formatFecha(elem.Fecha)}</td>
                     </tr>
                   ))

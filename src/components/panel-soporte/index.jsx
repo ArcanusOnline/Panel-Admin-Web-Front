@@ -6,6 +6,7 @@ import {
   obtenerSoportes,
   cerrarSoporte,
 } from "../../querys/scripts";
+import { checkRoles } from "../../utils/checkRoles";
 
 const PanelSoporte = () => {
   const [soportes, setSoportes] = useState([]);
@@ -19,6 +20,11 @@ const PanelSoporte = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
+    let roles = checkRoles();
+    if (!roles || !roles.includes(4)) {
+      navigate("/inicio");
+      return;
+    }
     async function capturarSectores() {
       let data = await obtenerSectoresSoporte();
       if (data && Array.isArray(data[0])) {

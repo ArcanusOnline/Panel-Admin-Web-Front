@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { checkRoles } from "../../utils/checkRoles";
 import { useNavigate, Link, Outlet, useLocation } from "react-router";
 
+
 const AdministracionUsuarios = () => {
   let navigate = useNavigate();
   const location = useLocation();
@@ -12,7 +13,7 @@ const AdministracionUsuarios = () => {
 
   useEffect(() => {
     let roles = checkRoles();
-    if (!roles || !roles.includes(1)) {
+    if (!roles || !roles.includes(2)) {
       navigate("/inicio");
       return;
     }

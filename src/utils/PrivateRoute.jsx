@@ -17,13 +17,10 @@ const PrivateRoute = () => {
         .join("")
     );
     const payload = JSON.parse(jsonPayload);
-
     if (!payload.username) {
       return <Navigate to="/" replace />;
     }
-    if (!payload.roles.includes(6)) {
-      return <Navigate to="/" replace />;
-    }
+
 
     return <Outlet />;
   } catch (e) {
