@@ -288,12 +288,13 @@ async function encarcelarPersonajeWeb({ nick, tiempo, gm, razon }) {
   }
 }
 
-async function encarcelarPersonajeOffline({ personaje, pena, ban }) {
+async function encarcelarPersonajeOffline({ personaje, pena, ban, token }) {
   try {
     let response = await fetch(`${urlBackend}/penar-personaje-offline`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ personaje, pena, ban }),
     });
@@ -332,6 +333,55 @@ async function banearSiEstaOnline({ nick, tiempo, gm, razon }) {
   }
 }
 
+async function censurarMensajeSoporte(id) {
+  try {
+    let response = await fetch(`${urlBackend}/censurar-mensaje-soporte`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en censurarMensajeSoporte:", error);
+    throw error;
+  }
+}
+
+async function traerLogs() {
+  try {
+    let response = await fetch(`${urlBackend}/traer-logs-web`);
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en traerLogs:", error);
+    throw error;
+  }
+}
+
+async function traerFotodenunciasPorId(id) {
+  try {
+    let response = await fetch(`${urlBackend}/listar-fotodenuncia-por-id`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
+    if (!response.ok) {
+      let data = await response.json();
+      return data;
+    }
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en actualizarNoticiaAPI:", error);
+    throw error;
+  }
+}
+
 export {
   iniciarSesion,
   obtenerRangosCuenta,
@@ -353,4 +403,7 @@ export {
   encarcelarPersonajeWeb,
   encarcelarPersonajeOffline,
   banearSiEstaOnline,
+  censurarMensajeSoporte,
+  traerLogs,
+  traerFotodenunciasPorId,
 };

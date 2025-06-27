@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./style.css";
 import { actualizarNoticia } from "../../../../querys/scripts";
 
@@ -7,6 +7,8 @@ const PanelEditNoticia = () => {
   const location = useLocation();
   const datos = location.state || null;
   const navigate = useNavigate();
+  const textareaRef = useRef(null);
+
   const [noticia, setNoticia] = useState({
     id: datos?.id,
     name: datos?.name || "",
@@ -36,14 +38,68 @@ const PanelEditNoticia = () => {
     }));
   };
 
+  const insertarEtiqueta = (etiquetaInicio, etiquetaFin) => {
+    const textarea = textareaRef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const textoSeleccionado = noticia.completa.slice(start, end);
+
+    const nuevoTexto =
+      noticia.completa.slice(0, start) +
+      etiquetaInicio +
+      textoSeleccionado +
+      etiquetaFin +
+      noticia.completa.slice(end);
+
+    setNoticia((prev) => ({ ...prev, completa: nuevoTexto }));
+
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(
+        start + etiquetaInicio.length,
+        end + etiquetaInicio.length
+      );
+    }, 0);
+  };
+
+  const convertirTextoFinal = (texto) => {
+    const customTagRegex = /\[url=([^\]]+)\](.*?)\[\/url\]/gi;
+    let textoConAnclas = texto.replace(
+      customTagRegex,
+      (match, url, textoVisible) => {
+        const urlConProtocolo = url.match(/^https?:\/\//i)
+          ? url
+          : `https://${url}`;
+        return `<a href="${urlConProtocolo}" target="_blank" rel="noopener noreferrer">${textoVisible}</a>`;
+      }
+    );
+
+    const httpRegex = /(?<!["'>])\b(https?:\/\/[^\s<]+[^\s<.,:;"')\]\s])/gi;
+    textoConAnclas = textoConAnclas.replace(httpRegex, (url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    const wwwRegex =
+      /(?<!["'=\]]|https?:\/\/)(\bwww\.[^\s<]+[^\s<.,:;"')\]\s])/gi;
+    textoConAnclas = textoConAnclas.replace(wwwRegex, (url) => {
+      return `<a href="https://${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    return textoConAnclas;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const textoFinal = convertirTextoFinal(noticia.completa);
+
     try {
       const data = await actualizarNoticia(noticia.id, {
         msg: noticia.msg,
         titulo: noticia.titulo,
-        completa: noticia.completa,
+        completa: textoFinal,
       });
+
       if (data.error === 0) {
         alert(data.msg);
         navigate("/noticias");
@@ -90,12 +146,47 @@ const PanelEditNoticia = () => {
 
         <div className="form-group">
           <label htmlFor="completa">Completa:</label>
+
+          <div className="formato-botones">
+            <button
+              type="button"
+              onClick={() => insertarEtiqueta("<b>", "</b>")}
+            >
+              Negrita
+            </button>
+            <button
+              type="button"
+              onClick={() => insertarEtiqueta("<i>", "</i>")}
+            >
+              Cursiva
+            </button>
+            <button
+              type="button"
+              onClick={() => insertarEtiqueta("<u>", "</u>")}
+            >
+              Subrayado
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                const url = prompt("Ingresá la URL:");
+                if (url) {
+                  insertarEtiqueta(`[url=${url}]`, `[/url]`);
+                }
+              }}
+            >
+              Insertar Link
+            </button>
+          </div>
+
           <textarea
+            ref={textareaRef}
             id="completa"
             name="completa"
             value={noticia.completa}
             onChange={handleChange}
-            rows={5}
+            rows={6}
             className="input-textarea"
           />
         </div>

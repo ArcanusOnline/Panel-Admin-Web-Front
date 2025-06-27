@@ -22,11 +22,17 @@ const CheckeoDenuncias = () => {
     tiempo: 0,
     gm: localStorage.getItem("username").toLowerCase() || "Administracion",
     razon: "",
+    numeroFD: state?.ID,
   });
+  let [token, setToken] = useState("");
   let [leida, setLeida] = useState("");
   let navigate = useNavigate();
 
   useState(() => {
+    let selectToken = localStorage.getItem("token") || "";
+    if (selectToken) {
+      setToken(selectToken);
+    }
     if (state.estado === 1) {
       setLeida("Fotodenuncia ya revisada");
     }
@@ -100,6 +106,7 @@ const CheckeoDenuncias = () => {
           tiempo: ban ? tiempoBan : pena.tiempo,
         },
         ban,
+        token,
       });
       if (dataOff.error === 0) {
         let id = state.ID;
@@ -267,19 +274,8 @@ const CheckeoDenuncias = () => {
         </div>
 
         <div className="acciones-panel">
-          {leida && <p>{leida}</p>}
-          <button
-            onClick={() => penarPersonaje()}
-            className={state.estado === 1 ? "hidden" : ""}
-          >
-            Sancionar
-          </button>
-          <button
-            onClick={marcarLeidaFD}
-            className={state.estado === 1 ? "hidden" : ""}
-          >
-            No sancionar
-          </button>
+          <button onClick={() => penarPersonaje()}>Sancionar</button>
+          <button onClick={marcarLeidaFD}>No sancionar</button>
         </div>
       </div>
     </>

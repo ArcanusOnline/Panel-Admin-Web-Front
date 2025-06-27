@@ -13,6 +13,7 @@ import {
   ResponderSoporte,
   Fotodenuncias,
   CheckeoDenuncias,
+  PanelLogs,
 } from "./components/index";
 import { PrivateRoute } from "./utils/PrivateRoute";
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/administrador" element={<AdministracionUsuarios />}>
               <Route path="agregar-roles" element={<AgregarRoles />} />
               <Route path="eliminar-roles" element={<EliminarRoles />} />
+              <Route path="panel-logs" element={<PanelLogs />} />
             </Route>
             <Route path="/noticias" element={<PanelNoticias />}>
               <Route path="agregar-noticia" element={<AgregarNoticia />} />

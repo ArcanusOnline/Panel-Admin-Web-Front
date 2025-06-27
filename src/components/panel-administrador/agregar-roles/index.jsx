@@ -30,7 +30,7 @@ const AgregarRoles = () => {
         navigate("/inicio");
       }
     } catch (error) {
-      console.error("Error al conectar con el servidor")
+      console.error("Error al conectar con el servidor");
     }
   }
 

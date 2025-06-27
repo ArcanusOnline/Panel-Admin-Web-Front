@@ -9,5 +9,6 @@ export { EditarNoticia } from "./panel-noticias/editar-noticia";
 export { PanelEditNoticia } from "./panel-noticias/editar-noticia/panel-edit-noticia";
 export { PanelSoporte } from "./panel-soporte";
 export { ResponderSoporte } from "./panel-soporte/responder-soporte";
-export {Fotodenuncias} from "./fotodenuncias"
-export {CheckeoDenuncias} from "./fotodenuncias/check-denuncias"
+export { Fotodenuncias } from "./fotodenuncias";
+export { CheckeoDenuncias } from "./fotodenuncias/check-denuncias";
+export { PanelLogs } from "./panel-administrador/ver-logs";

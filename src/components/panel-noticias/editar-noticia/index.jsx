@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router";
 import { useState, useEffect } from "react";
 import { obtenerNoticias } from "../../../querys/scripts";
-import "./style.css"
+import "./style.css";
 
 const EditarNoticia = () => {
   let [noticias, setNoticias] = useState([]);
@@ -39,11 +39,12 @@ const EditarNoticia = () => {
           </div>
         ))
       ) : (
-        <p className="mensaje-error">{error || "No hay noticias disponibles"}</p>
+        <p className="mensaje-error">
+          {error || "No hay noticias disponibles"}
+        </p>
       )}
     </div>
   );
 };
-
 
 export { EditarNoticia };

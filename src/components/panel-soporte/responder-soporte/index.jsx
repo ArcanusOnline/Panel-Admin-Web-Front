@@ -1,5 +1,9 @@
 import { useLocation, Link } from "react-router";
-import { obtenerDataSoporte, responderSoporte } from "../../../querys/scripts";
+import {
+  obtenerDataSoporte,
+  responderSoporte,
+  censurarMensajeSoporte,
+} from "../../../querys/scripts";
 import { useEffect, useState } from "react";
 import "./style.css";
 
@@ -13,8 +17,13 @@ const ResponderSoporte = () => {
     id,
     respuesta: "",
     nombre: responde,
+    token: "",
   });
   useEffect(() => {
+    let selectToken = localStorage.getItem("token") || "";
+    if (selectToken) {
+      setFields((e) => ({ ...e, token: selectToken }));
+    }
     async function getData() {
       let data = await obtenerDataSoporte(id);
       if (data.error) {
@@ -49,6 +58,21 @@ const ResponderSoporte = () => {
         alert("Soporte cerrado con éxito");
       } else {
         alert(data?.msg || "No se pudo cerrar el soporte");
+      }
+    } catch (error) {
+      alert("Error al conectar con el servidor");
+    }
+  }
+
+  async function censurarMensaje(id) {
+    try {
+      let data = await censurarMensajeSoporte(id);
+      if (data.error === 0) {
+        alert("Mensaje censurado correctamente");
+        return;
+      } else {
+        alert("Error al censurar el mensaje, vuelva a intentar");
+        return;
       }
     } catch (error) {
       alert("Error al conectar con el servidor");
@@ -107,10 +131,24 @@ const ResponderSoporte = () => {
                       elem.ip_address
                     }`}</h3>
                     <p className="mensaje-texto">
-                      {elem.censura === "CENSURADO"
-                        ? `(MENSAJE CENSURADO)\n${elem.texto}`
-                        : elem.texto}
+                      {elem.censura === "CENSURADO" ? (
+                        <>
+                          <strong>(MENSAJE CENSURADO)</strong>
+                          <br />
+                          <span>{elem.texto}</span>
+                        </>
+                      ) : (
+                        elem.texto
+                      )}
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        censurarMensaje(elem.idComentario);
+                      }}
+                    >
+                      Censurar
+                    </button>
                   </div>
                 </div>
               ))}

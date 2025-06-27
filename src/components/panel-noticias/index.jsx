@@ -2,7 +2,6 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { obtenerNoticias, eliminarNoticiaPanel } from "../../querys/scripts";
-import { checkRoles } from "../../utils/checkRoles";
 
 const PanelNoticias = () => {
   const location = useLocation();
@@ -22,11 +21,6 @@ const PanelNoticias = () => {
   const [notiSeleccionada, setNotiSeleccionada] = useState(null);
 
   useEffect(() => {
-    let roles = checkRoles();
-    if (!roles || !roles.includes(3)) {
-      navigate("/inicio");
-      return;
-    }
     if (isListadoNoticias || isEditarListado || isEliminar) {
       async function getNoticias() {
         const data = await obtenerNoticias();
