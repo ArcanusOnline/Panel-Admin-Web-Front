@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 const PanelLogs = () => {
   const [logs, setLogs] = useState([]);
   const [error, setError] = useState("");
-
   const [modalAbierto, setModalAbierto] = useState(false);
   const [datosFD, setDatosFD] = useState(null);
 
@@ -46,23 +45,15 @@ const PanelLogs = () => {
 
   return (
     <>
-      <div>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <div className="logs-container">
+        <table className="logs-table">
           <thead>
-            <tr style={{ backgroundColor: "#333", color: "white" }}>
-              <th style={{ padding: "10px", border: "1px solid #555" }}>
-                ID FD
-              </th>
-              <th style={{ padding: "10px", border: "1px solid #555" }}>GM</th>
-              <th style={{ padding: "10px", border: "1px solid #555" }}>
-                Acción
-              </th>
-              <th style={{ padding: "10px", border: "1px solid #555" }}>
-                Usuario
-              </th>
-              <th style={{ padding: "10px", border: "1px solid #555" }}>
-                Fecha
-              </th>
+            <tr className="logs-header">
+              <th>ID FD</th>
+              <th>GM</th>
+              <th>Acción</th>
+              <th>Usuario</th>
+              <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
@@ -70,57 +61,22 @@ const PanelLogs = () => {
               logs.map((elem, ind) => (
                 <tr key={ind}>
                   <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid #555",
-                      color: "white",
-                      cursor: "pointer",
-                    }}
+                    className="logs-cell clickable"
                     onClick={() => abrirModal(elem.IdFD)}
                   >
                     {elem.IdFD}
                   </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid #555",
-                      color: "white",
-                    }}
-                  >
-                    {elem.Usuario}
-                  </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid #555",
-                      color: "white",
-                    }}
-                  >
-                    {elem.Accion}
-                  </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid #555",
-                      color: "white",
-                    }}
-                  >
-                    {elem.NickB || "-"}
-                  </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: "1px solid #555",
-                      color: "white",
-                    }}
-                  >
+                  <td className="logs-cell">{elem.Usuario}</td>
+                  <td className="logs-cell">{elem.Accion}</td>
+                  <td className="logs-cell">{elem.NickB || "-"}</td>
+                  <td className="logs-cell">
                     {formatearFecha(elem.fecha) || "-"}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ color: "white", textAlign: "center" }}>
+                <td colSpan="5" className="logs-error">
                   {error || "No hay datos disponibles."}
                 </td>
               </tr>
@@ -130,57 +86,20 @@ const PanelLogs = () => {
       </div>
 
       {modalAbierto && datosFD && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 9999,
-          }}
-          onClick={cerrarModal}
-        >
-          <div
-            style={{
-              backgroundColor: "#222",
-              padding: "20px",
-              borderRadius: "8px",
-              color: "white",
-              minWidth: "300px",
-              maxWidth: "600px",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="modal-overlay" onClick={cerrarModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Detalles de Fotodenuncia #{datosFD.fotodenuncias[0].ID}</h3>
-            <p
-              style={{
-                color: "white",
-              }}
-            >
+            <p>
               <strong>Usuario:</strong> {datosFD.fotodenuncias[0].Usuario}
             </p>
-            <p
-              style={{
-                color: "white",
-              }}
-            >
+            <p>
               <strong>Texto:</strong> {datosFD.fotodenuncias[0].Texto}
             </p>
-            <p
-              style={{
-                color: "white",
-              }}
-            >
+            <p>
               <strong>Fecha:</strong>{" "}
               {formatearFecha(datosFD.fotodenuncias[0].Fecha)}
             </p>
-
-            <button onClick={cerrarModal} style={{ marginTop: "10px" }}>
+            <button className="close-button" onClick={cerrarModal}>
               Cerrar
             </button>
           </div>

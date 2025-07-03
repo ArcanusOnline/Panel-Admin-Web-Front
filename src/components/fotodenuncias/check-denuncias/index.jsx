@@ -78,6 +78,7 @@ const CheckeoDenuncias = () => {
             tiempo: tiempoBan,
             gm: pena?.gm,
             razon: pena?.razon,
+            idPena: pena?.numeroFD,
           });
           if (banear.status === "ok") {
             alert("Personaje baneado correctamente");

@@ -1,0 +1,69 @@
+.panel-gm-container {
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.panel-gm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.panel-gm-form > p{
+  color: white;
+}
+
+.panel-gm-form > label {
+  color: white;
+}
+
+.panel-gm-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.panel-gm-input {
+  margin-top: 5px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #2e2e2e;
+  color: white;
+}
+
+.privilegios-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.privilegios-container > label {
+  color: white;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.panel-gm-button {
+  padding: 10px;
+  background-color: #444;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.panel-gm-button:hover {
+  background-color: #666;
+}

@@ -12,3 +12,5 @@ export { ResponderSoporte } from "./panel-soporte/responder-soporte";
 export { Fotodenuncias } from "./fotodenuncias";
 export { CheckeoDenuncias } from "./fotodenuncias/check-denuncias";
 export { PanelLogs } from "./panel-administrador/ver-logs";
+export { PanelGmEdit } from "./panel-administrador/panel-gms";
+export { PanelGestionPersonajes } from "./Panel-Gestion-Personajes";

@@ -306,14 +306,14 @@ async function encarcelarPersonajeOffline({ personaje, pena, ban, token }) {
   }
 }
 
-async function banearSiEstaOnline({ nick, tiempo, gm, razon }) {
+async function banearSiEstaOnline({ nick, tiempo, gm, razon, idPena }) {
   try {
     let response = await fetch(`${urlBackend}/banear`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ nick, tiempo, gm, razon }),
+      body: JSON.stringify({ nick, tiempo, gm, razon, idPena }),
     });
     let data = await response.json();
     if (data.status === "ok") {
@@ -377,7 +377,29 @@ async function traerFotodenunciasPorId(id) {
     let data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error en actualizarNoticiaAPI:", error);
+    console.error("Error en traerFotodenunciasPorId:", error);
+    throw error;
+  }
+}
+
+async function ingresarRolGm(fields) {
+  try {
+    let response = await fetch(`${urlBackend}/agregar-roles-gm`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usuario: fields.usuario,
+        rol: fields.privilegio,
+        fecha: fields.desde,
+      }),
+    });
+
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en ingresarRolGm:", error);
     throw error;
   }
 }
@@ -406,4 +428,5 @@ export {
   censurarMensajeSoporte,
   traerLogs,
   traerFotodenunciasPorId,
+  ingresarRolGm,
 };

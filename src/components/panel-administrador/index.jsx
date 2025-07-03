@@ -10,6 +10,7 @@ const AdministracionUsuarios = () => {
   const isAgregar = location.pathname.endsWith("agregar-roles");
   const isEliminar = location.pathname.endsWith("eliminar-roles");
   const isLogs = location.pathname.endsWith("panel-logs");
+  const isPanelGm = location.pathname.endsWith("panel-gm-edit");
 
   useEffect(() => {
     let roles = checkRoles();
@@ -35,11 +36,15 @@ const AdministracionUsuarios = () => {
         <Link to="panel-logs" className="btn btn-delete">
           Ver Logs
         </Link>
+        <Link to="panel-gm-edit" className="btn btn-delete">
+          Edit Gms
+        </Link>
       </div>
 
       {isAgregar && <h2 className="admin-subtitle">Agregar Roles</h2>}
       {isEliminar && <h2 className="admin-subtitle">Eliminar Roles</h2>}
       {isLogs && <h2 className="admin-subtitle">Logs Web</h2>}
+      {isPanelGm && <h2 className="admin-subtitle">Edit Gm</h2>}
 
       <div className="admin-outlet">
         <Outlet />
