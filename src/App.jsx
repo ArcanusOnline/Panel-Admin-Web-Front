@@ -16,6 +16,14 @@ import {
   PanelLogs,
   PanelGmEdit,
   PanelGestionPersonajes,
+  BanearPersonajeGestion,
+  PenarPersonajeGestion,
+  DeslogearPersonajeGestion,
+  BloquearPersonajeGestion,
+  BuscarPersonajeGestion,
+  RecuperarPwPersonajeGestion,
+  CambiarPinPersonajeGestion,
+  CambiarEmailPersonajeGestion,
 } from "./components/index";
 import { PrivateRoute } from "./utils/PrivateRoute";
 
@@ -46,14 +54,38 @@ function App() {
               path="/gestion-de-personajes"
               element={<PanelGestionPersonajes />}
             >
-              <Route path="gestion-banear-personaje" element={null} />
-              <Route path="gestion-penar-personaje" element={null} />
-              <Route path="gestion-desloguear-personaje" element={null} />
-              <Route path="gestion-bloquear-personaje" element={null} />
-              <Route path="gestion-buscar-personaje" element={null} />
-              <Route path="gestion-recuperar-pass-personaje" element={null} />
-              <Route path="gestion-cambiar-email-personaje" element={null} />
-              <Route path="gestion-cambiar-pin-personaje" element={null} />
+              <Route
+                path="gestion-banear-personaje"
+                element={<BanearPersonajeGestion />}
+              />
+              <Route
+                path="gestion-penar-personaje"
+                element={<PenarPersonajeGestion />}
+              />
+              <Route
+                path="gestion-desloguear-personaje"
+                element={<DeslogearPersonajeGestion />}
+              />
+              <Route
+                path="gestion-bloquear-personaje"
+                element={<BloquearPersonajeGestion />}
+              />
+              <Route
+                path="gestion-buscar-personaje"
+                element={<BuscarPersonajeGestion />}
+              />
+              <Route
+                path="gestion-recuperar-pass-personaje"
+                element={<RecuperarPwPersonajeGestion />}
+              />
+              <Route
+                path="gestion-cambiar-email-personaje"
+                element={<CambiarEmailPersonajeGestion />}
+              />
+              <Route
+                path="gestion-cambiar-pin-personaje"
+                element={<CambiarPinPersonajeGestion />}
+              />
             </Route>
           </Route>
         </Routes>
