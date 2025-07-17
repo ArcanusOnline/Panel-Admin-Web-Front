@@ -1,16 +1,33 @@
 import { useEffect, useState } from "react";
-import "./style.css"
+import "./style.css";
+import { cambiarPinGestion } from "../../../querys/scripts";
 
 const CambiarPinPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
     pinNueva: "",
-    gm: localStorage.getItem("username") || "Administrador",
+    gm: localStorage.getItem("token"),
   });
+
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      let data = await cambiarPinGestion({
+        nick: personaje.personaje,
+        token: personaje.gm,
+        pinNueva: personaje.pinNueva,
+      });
+      setError(data.message);
+    } catch (e) {
+      setError("Error al conectarse con el servidor");
+    }
+  }
 
   return (
     <div className="cambiar-pin-container">
-      <form className="cambiar-pin-form">
+      <form className="cambiar-pin-form" onSubmit={handleSubmit}>
         <label htmlFor="buscarPjGestion" className="cambiar-pin-label">
           Ingrese Personaje
           <input
@@ -18,6 +35,7 @@ const CambiarPinPersonajeGestion = () => {
             name="buscarPjGestion"
             id="buscarPjGestion"
             className="cambiar-pin-input"
+            value={personaje.personaje}
             onChange={(e) =>
               setPersonaje((prev) => ({
                 ...prev,
@@ -34,6 +52,7 @@ const CambiarPinPersonajeGestion = () => {
             name="pinNueva"
             id="pinNueva"
             className="cambiar-pin-input"
+            value={personaje.pinNueva}
             onChange={(e) =>
               setPersonaje((prev) => ({
                 ...prev,
@@ -42,7 +61,7 @@ const CambiarPinPersonajeGestion = () => {
             }
           />
         </label>
-
+        {error && <p>{error}</p>}
         <button type="submit" className="cambiar-pin-button">
           Cambiar PIN
         </button>

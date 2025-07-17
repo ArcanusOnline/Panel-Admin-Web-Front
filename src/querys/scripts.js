@@ -288,6 +288,24 @@ async function encarcelarPersonajeWeb({ nick, tiempo, gm, razon }) {
   }
 }
 
+async function encarcelarPersonajeWebGestionOn({ nick, tiempo, gm, razon }) {
+  try {
+    let response = await fetch(`${urlBackend}/penar-personaje-gestion-on`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${gm}`,
+      },
+      body: JSON.stringify({ nick, tiempo, razon }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en encarcelarPersonajeWeb:", error);
+    throw error;
+  }
+}
+
 async function encarcelarPersonajeOffline({ personaje, pena, ban, token }) {
   try {
     let response = await fetch(`${urlBackend}/penar-personaje-offline`, {
@@ -297,6 +315,29 @@ async function encarcelarPersonajeOffline({ personaje, pena, ban, token }) {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ personaje, pena, ban }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en encarcelarPersonajeOffline:", error);
+    throw error;
+  }
+}
+
+async function encarcelarPersonajeOfflineGestion({
+  personaje,
+  pena,
+  tiempo,
+  token,
+}) {
+  try {
+    let response = await fetch(`${urlBackend}/penar-panel-gestion-off`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ personaje, pena, tiempo }),
     });
     let data = await response.json();
     return data;
@@ -329,6 +370,86 @@ async function banearSiEstaOnline({ nick, tiempo, gm, razon, idPena }) {
     }
   } catch (error) {
     console.error("Error en banearSiEstaOnline:", error);
+    throw error;
+  }
+}
+
+async function banearSiEstaOnlinePanelGestion({ nick, tiempo, gm, razon }) {
+  try {
+    let response = await fetch(`${urlBackend}/banear-online-gestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nick, tiempo, gm, razon }),
+    });
+    let data = await response.json();
+    if (data.status === "ok") {
+      let deslogeoRes = await fetch(`${urlBackend}/desloguear`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nick }),
+      });
+      let deslogeoData = await deslogeoRes.json();
+      return deslogeoData;
+    }
+  } catch (error) {
+    console.error("Error en banearSiEstaOnline:", error);
+    throw error;
+  }
+}
+
+async function deslogearPersonajeGestion({ nick, token }) {
+  try {
+    let deslogeoRes = await fetch(`${urlBackend}/desloguear`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ nick }),
+    });
+    let deslogeoData = await deslogeoRes.json();
+    return deslogeoData;
+  } catch (error) {
+    console.error("Error en deslogearPersonajeGestion:", error);
+    throw error;
+  }
+}
+
+async function bloquearPersonaje({ usuario, status, token }) {
+  try {
+    let response = await fetch(`${urlBackend}/bloquear-personaje-panel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ usuario, status }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al bloquear personaje:", error.message);
+    return { message: error.message || "Error en la solicitud", error: 1 };
+  }
+}
+
+async function banearPjOfflineGestion({ personaje, motivo, tiempo, gm }) {
+  try {
+    let response = await fetch(`${urlBackend}/banear-panel-gestion-off`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ personaje, motivo, tiempo, gm }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en banearPjOfflineGestion:", error);
     throw error;
   }
 }
@@ -404,6 +525,68 @@ async function ingresarRolGm(fields) {
   }
 }
 
+async function enviarEmailRecuGestion({ nick, token }) {
+  try {
+    let response = await fetch(`${urlBackend}/enviar-recupass-gestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        nick,
+      }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en enviarEmailRecuGestion:", error);
+    throw error;
+  }
+}
+
+async function cambiarEmailGestion({ nick, token, email }) {
+  try {
+    let response = await fetch(`${urlBackend}/cambiar-email-gestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        nick,
+        email,
+      }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en cambiarEmailGestion:", error);
+    throw error;
+  }
+}
+
+async function cambiarPinGestion({ nick, token, pinNueva }) {
+  try {
+    let response = await fetch(`${urlBackend}/cambiar-pin-gestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        nick,
+        pinNueva,
+      }),
+    });
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error en cambiarPinGestion:", error);
+    throw error;
+  }
+}
+
 export {
   iniciarSesion,
   obtenerRangosCuenta,
@@ -429,4 +612,13 @@ export {
   traerLogs,
   traerFotodenunciasPorId,
   ingresarRolGm,
+  banearSiEstaOnlinePanelGestion,
+  banearPjOfflineGestion,
+  encarcelarPersonajeWebGestionOn,
+  encarcelarPersonajeOfflineGestion,
+  deslogearPersonajeGestion,
+  bloquearPersonaje,
+  enviarEmailRecuGestion,
+  cambiarEmailGestion,
+  cambiarPinGestion
 };

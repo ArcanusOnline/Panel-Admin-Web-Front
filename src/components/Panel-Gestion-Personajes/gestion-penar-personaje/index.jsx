@@ -1,17 +1,74 @@
 import { useEffect, useState } from "react";
 import "./style.css";
+import {
+  encarcelarPersonajeWebGestionOn,
+  traerEstadoYPenas,
+  encarcelarPersonajeOfflineGestion,
+} from "../../../querys/scripts";
 
 const PenarPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
     motivo: "",
     tiempo: "",
-    gm: localStorage.getItem("username") || "Administrador",
+    gm: localStorage.getItem("token"),
   });
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      let data = await traerEstadoYPenas(personaje.personaje);
+      if (data.error === 0) {
+        if (data.personaje[0].Online == 0) {
+          let response = await encarcelarPersonajeOfflineGestion({
+            personaje: personaje.personaje,
+            pena: personaje.motivo,
+            tiempo: personaje.tiempo,
+            token: personaje.gm,
+          });
+          if (response.error === 0) {
+            setError(response.msg);
+            setPersonaje((prev) => ({
+              ...prev,
+              personaje: "",
+              motivo: "",
+              tiempo: "",
+            }));
+          } else {
+            setError(response.msg);
+          }
+        } else {
+          let response = await encarcelarPersonajeWebGestionOn({
+            nick: personaje.personaje,
+            tiempo: personaje.tiempo,
+            gm: personaje.gm,
+            razon: personaje.motivo,
+          });
+          if (response.status === "ok") {
+            setError(response.mensaje);
+            setPersonaje((prev) => ({
+              ...prev,
+              personaje: "",
+              motivo: "",
+              tiempo: "",
+            }));
+          } else {
+            setError(response.msg);
+          }
+        }
+      } else {
+        setError("No se encontro el personaje seleccionado");
+      }
+    } catch (error) {
+      setError("Se perdio la conexion con el servidor");
+      return;
+    }
+  }
 
   return (
     <div className="penar-container">
-      <form className="penar-form">
+      <form className="penar-form" onSubmit={handleSubmit}>
         <label htmlFor="buscarPjGestion" className="penar-label">
           Ingrese Personaje
           <input
@@ -19,6 +76,7 @@ const PenarPersonajeGestion = () => {
             name="buscarPjGestion"
             id="buscarPjGestion"
             className="penar-input"
+            value={personaje.personaje}
             onChange={(e) =>
               setPersonaje((prev) => ({
                 ...prev,
@@ -35,6 +93,7 @@ const PenarPersonajeGestion = () => {
             name="motivoPenaGestion"
             id="motivoPenaGestion"
             className="penar-input"
+            value={personaje.motivo}
             onChange={(e) =>
               setPersonaje((prev) => ({
                 ...prev,
@@ -52,6 +111,7 @@ const PenarPersonajeGestion = () => {
             id="tiempoPenaGestion"
             min={0}
             className="penar-input"
+            value={personaje.tiempo}
             onChange={(e) =>
               setPersonaje((prev) => ({
                 ...prev,
@@ -60,7 +120,7 @@ const PenarPersonajeGestion = () => {
             }
           />
         </label>
-
+        {error && <p>{error}</p>}
         <button type="submit" className="penar-button">
           Penar
         </button>

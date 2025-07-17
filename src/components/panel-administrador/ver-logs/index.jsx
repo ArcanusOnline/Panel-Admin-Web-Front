@@ -7,6 +7,9 @@ const PanelLogs = () => {
   const [error, setError] = useState("");
   const [modalAbierto, setModalAbierto] = useState(false);
   const [datosFD, setDatosFD] = useState(null);
+  const [paginaActual, setPaginaActual] = useState(1);
+
+  const logsPorPagina = 20;
 
   useEffect(() => {
     async function cargarDatos() {
@@ -43,6 +46,25 @@ const PanelLogs = () => {
     setDatosFD(null);
   };
 
+  // Cálculo del slice para mostrar solo los logs de la página actual
+  const indiceUltimoLog = paginaActual * logsPorPagina;
+  const indicePrimerLog = indiceUltimoLog - logsPorPagina;
+  const logsMostrados = logs.slice(indicePrimerLog, indiceUltimoLog);
+
+  const totalPaginas = Math.ceil(logs.length / logsPorPagina);
+
+  const handleSiguiente = () => {
+    if (paginaActual < totalPaginas) {
+      setPaginaActual(paginaActual + 1);
+    }
+  };
+
+  const handleAnterior = () => {
+    if (paginaActual > 1) {
+      setPaginaActual(paginaActual - 1);
+    }
+  };
+
   return (
     <>
       <div className="logs-container">
@@ -57,14 +79,20 @@ const PanelLogs = () => {
             </tr>
           </thead>
           <tbody>
-            {logs && Array.isArray(logs) ? (
-              logs.map((elem, ind) => (
-                <tr key={ind}>
+            {logsMostrados && logsMostrados.length > 0 ? (
+              logsMostrados.map((elem, ind) => (
+                <tr key={indicePrimerLog + ind}>
                   <td
-                    className="logs-cell clickable"
-                    onClick={() => abrirModal(elem.IdFD)}
+                    className={`logs-cell ${
+                      elem.IdFD !== null ? "clickable" : ""
+                    }`}
+                    onClick={() => {
+                      if (elem.IdFD !== null) {
+                        abrirModal(elem.IdFD);
+                      }
+                    }}
                   >
-                    {elem.IdFD}
+                    {elem.IdFD !== null ? elem.IdFD : "S/FD"}
                   </td>
                   <td className="logs-cell">{elem.Usuario}</td>
                   <td className="logs-cell">{elem.Accion}</td>
@@ -83,6 +111,25 @@ const PanelLogs = () => {
             )}
           </tbody>
         </table>
+
+        {/* Paginación */}
+        <div
+          className="paginacion"
+          style={{ marginTop: "1rem", textAlign: "center" }}
+        >
+          <button onClick={handleAnterior} disabled={paginaActual === 1}>
+            Anterior
+          </button>
+          <span style={{ margin: "0 1rem" }}>
+            Página {paginaActual} de {totalPaginas}
+          </span>
+          <button
+            onClick={handleSiguiente}
+            disabled={paginaActual === totalPaginas}
+          >
+            Siguiente
+          </button>
+        </div>
       </div>
 
       {modalAbierto && datosFD && (

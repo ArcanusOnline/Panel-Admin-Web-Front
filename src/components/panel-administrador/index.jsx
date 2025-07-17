@@ -14,7 +14,7 @@ const AdministracionUsuarios = () => {
 
   useEffect(() => {
     let roles = checkRoles();
-    if (!roles || !roles.includes(1)) {
+    if (!roles || !roles.includes(2)) {
       navigate("/inicio");
       return;
     }

@@ -1,6 +1,8 @@
 import { traerFotodenuncias } from "../../querys/scripts";
 import { useState, useEffect } from "react";
 import { useNavigate, Outlet, useLocation, Link } from "react-router";
+import { checkRoles } from "../../utils/checkRoles";
+
 import "./style.css";
 
 const Fotodenuncias = () => {
@@ -15,6 +17,13 @@ const Fotodenuncias = () => {
   const location = useLocation();
   const ITEMS_POR_PAGINA = 30;
   const checkeo = location.pathname.endsWith("check-denuncia");
+
+  useEffect(() => {
+    const roles = checkRoles();
+    if (!roles || !roles.includes(1)) {
+      navigate("/inicio");
+    }
+  }, []);
 
   useEffect(() => {
     let selectToken = localStorage.getItem("token") || "";

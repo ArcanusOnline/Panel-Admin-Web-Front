@@ -2,6 +2,7 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { obtenerNoticias, eliminarNoticiaPanel } from "../../querys/scripts";
+import { checkRoles } from "../../utils/checkRoles";
 
 const PanelNoticias = () => {
   const location = useLocation();
@@ -19,6 +20,13 @@ const PanelNoticias = () => {
   const [noticias, setNoticias] = useState([]);
   const [error, setError] = useState("");
   const [notiSeleccionada, setNotiSeleccionada] = useState(null);
+
+  useEffect(() => {
+    const roles = checkRoles();
+    if (!roles || !roles.includes(3)) {
+      navigate("/inicio");
+    }
+  }, []);
 
   useEffect(() => {
     if (isListadoNoticias || isEditarListado || isEliminar) {

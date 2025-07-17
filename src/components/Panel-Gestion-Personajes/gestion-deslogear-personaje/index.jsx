@@ -1,17 +1,35 @@
 import { useEffect, useState } from "react";
-import "./style.css"
+import "./style.css";
+import { deslogearPersonajeGestion } from "../../../querys/scripts";
 
 const DeslogearPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
-    gm: localStorage.getItem("username") || "Administrador",
+    gm: localStorage.getItem("token"),
   });
-
   const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      let data = await deslogearPersonajeGestion({
+        nick: personaje.personaje,
+        token: personaje.gm,
+      });
+      if (data.status === "ok") {
+        setError(data.mensaje);
+      } else {
+        setError(data.msg);
+      }
+    } catch (error) {
+      setError("Se perdio la conexion con el servidor");
+      return;
+    }
+  }
 
   return (
     <div className="deslogear-container">
-      <form className="deslogear-form">
+      <form className="deslogear-form" onSubmit={handleSubmit}>
         <label htmlFor="buscarPjGestion" className="deslogear-label">
           Ingrese Personaje
           <input
@@ -19,6 +37,7 @@ const DeslogearPersonajeGestion = () => {
             name="buscarPjGestion"
             id="buscarPjGestion"
             className="deslogear-input"
+            value={personaje.personaje}
             onChange={(e) =>
               setPersonaje((prev) => ({
                 ...prev,

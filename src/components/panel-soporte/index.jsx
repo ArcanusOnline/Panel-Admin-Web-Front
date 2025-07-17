@@ -6,6 +6,7 @@ import {
   obtenerSoportes,
   cerrarSoporte,
 } from "../../querys/scripts";
+import { checkRoles } from "../../utils/checkRoles";
 
 const PanelSoporte = () => {
   const [soportes, setSoportes] = useState([]);
@@ -17,6 +18,13 @@ const PanelSoporte = () => {
   const [busquedaId, setBusquedaId] = useState("");
   const [token, setToken] = useState("");
   let navigate = useNavigate();
+
+  useEffect(() => {
+    const roles = checkRoles();
+    if (!roles || !roles.includes(4)) {
+      navigate("/inicio");
+    }
+  }, []);
 
   useEffect(() => {
     let selectToken = localStorage.getItem("token") || "";
