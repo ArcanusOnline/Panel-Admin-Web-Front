@@ -18,6 +18,10 @@ const DeslogearPersonajeGestion = () => {
       });
       if (data.status === "ok") {
         setError(data.mensaje);
+        setPersonaje((prev) => ({
+          ...prev,
+          personaje: "",
+        }));
       } else {
         setError(data.msg);
       }

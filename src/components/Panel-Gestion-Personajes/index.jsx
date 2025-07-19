@@ -12,9 +12,19 @@ const PanelGestionPersonajes = () => {
   const desloguear = location.pathname.endsWith("gestion-desloguear-personaje");
   const bloquear = location.pathname.endsWith("gestion-bloquear-personaje");
   const buscar = location.pathname.endsWith("gestion-buscar-personaje");
-  const recuPass = location.pathname.endsWith("gestion-recuperar-pass-personaje");
-  const cambiarEmail = location.pathname.endsWith("gestion-cambiar-email-personaje");
-  const cambiarPin = location.pathname.endsWith("gestion-cambiar-pin-personaje");
+  const recuPass = location.pathname.endsWith(
+    "gestion-recuperar-pass-personaje"
+  );
+  const cambiarEmail = location.pathname.endsWith(
+    "gestion-cambiar-email-personaje"
+  );
+  const cambiarPin = location.pathname.endsWith(
+    "gestion-cambiar-pin-personaje"
+  );
+  const unbanPj = location.pathname.endsWith("gestion-unbanear-personaje");
+  const desbloquearPj = location.pathname.endsWith(
+    "gestion-desbloquear-personaje"
+  );
 
   useEffect(() => {
     const roles = checkRoles();
@@ -30,14 +40,36 @@ const PanelGestionPersonajes = () => {
       </Link>
 
       <div className="menu-container">
-        <Link to="gestion-banear-personaje" className="menu-link">Banear Personaje</Link>
-        <Link to="gestion-penar-personaje" className="menu-link">Penar Personaje</Link>
-        <Link to="gestion-desloguear-personaje" className="menu-link">Desloguear Personaje</Link>
-        <Link to="gestion-bloquear-personaje" className="menu-link">Bloquear Personaje</Link>
-        <Link to="gestion-buscar-personaje" className="menu-link">Buscar Personaje</Link>
-        <Link to="gestion-recuperar-pass-personaje" className="menu-link">Recuperar contraseña Personaje</Link>
-        <Link to="gestion-cambiar-email-personaje" className="menu-link">Cambiar email Personaje</Link>
-        <Link to="gestion-cambiar-pin-personaje" className="menu-link">Cambiar PIN Personaje</Link>
+        <Link to="gestion-banear-personaje" className="menu-link">
+          Banear Personaje
+        </Link>
+        <Link to="gestion-penar-personaje" className="menu-link">
+          Penar Personaje
+        </Link>
+        <Link to="gestion-desloguear-personaje" className="menu-link">
+          Desloguear Personaje
+        </Link>
+        <Link to="gestion-bloquear-personaje" className="menu-link">
+          Bloquear Personaje
+        </Link>
+        <Link to="gestion-desbloquear-personaje" className="menu-link">
+          Desbloquear Personaje
+        </Link>
+        <Link to="gestion-buscar-personaje" className="menu-link">
+          Buscar Personaje
+        </Link>
+        <Link to="gestion-recuperar-pass-personaje" className="menu-link">
+          Recuperar contraseña Personaje
+        </Link>
+        <Link to="gestion-cambiar-email-personaje" className="menu-link">
+          Cambiar email Personaje
+        </Link>
+        <Link to="gestion-cambiar-pin-personaje" className="menu-link">
+          Cambiar PIN Personaje
+        </Link>
+        <Link to="gestion-unbanear-personaje" className="menu-link">
+          Unbanear Personaje
+        </Link>
       </div>
 
       {banear && <h2 className="panel-title">Banear Personaje</h2>}
@@ -45,9 +77,15 @@ const PanelGestionPersonajes = () => {
       {desloguear && <h2 className="panel-title">Desloguear Personaje</h2>}
       {bloquear && <h2 className="panel-title">Bloquear Personaje</h2>}
       {buscar && <h2 className="panel-title">Buscar Personaje</h2>}
-      {recuPass && <h2 className="panel-title">Recuperar contraseña del Personaje</h2>}
-      {cambiarEmail && <h2 className="panel-title">Cambiar Email del Personaje</h2>}
+      {recuPass && (
+        <h2 className="panel-title">Recuperar contraseña del Personaje</h2>
+      )}
+      {cambiarEmail && (
+        <h2 className="panel-title">Cambiar Email del Personaje</h2>
+      )}
       {cambiarPin && <h2 className="panel-title">Cambiar PIN del Personaje</h2>}
+      {unbanPj && <h2 className="panel-title">Unbanear Personaje</h2>}
+      {desbloquearPj && <h2 className="panel-title">Desbloquear Personaje</h2>}
 
       <div className="panel-outlet">
         <Outlet />

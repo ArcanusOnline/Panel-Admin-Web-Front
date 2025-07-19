@@ -7,6 +7,7 @@ const CambiarPinPersonajeGestion = () => {
     personaje: "",
     pinNueva: "",
     gm: localStorage.getItem("token"),
+    numeroSoporte: "",
   });
 
   const [error, setError] = useState("");
@@ -18,8 +19,19 @@ const CambiarPinPersonajeGestion = () => {
         nick: personaje.personaje,
         token: personaje.gm,
         pinNueva: personaje.pinNueva,
+        numeroSoporte: personaje.numeroSoporte,
       });
-      setError(data.message);
+      if (data.error === 0) {
+        setError(data.message);
+        setPersonaje((prev) => ({
+          ...prev,
+          personaje: "",
+          pinNueva: "",
+          numeroSoporte: "",
+        }));
+      } else {
+        setError(data.message);
+      }
     } catch (e) {
       setError("Error al conectarse con el servidor");
     }
@@ -57,6 +69,22 @@ const CambiarPinPersonajeGestion = () => {
               setPersonaje((prev) => ({
                 ...prev,
                 pinNueva: e.target.value,
+              }))
+            }
+          />
+        </label>
+        <label htmlFor="numeroSoporte" className="cambiar-pin-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="numeroSoporte"
+            id="numeroSoporte"
+            className="cambiar-pin-input"
+            value={personaje.numeroSoporte}
+            onChange={(e) =>
+              setPersonaje((prev) => ({
+                ...prev,
+                numeroSoporte: e.target.value,
               }))
             }
           />

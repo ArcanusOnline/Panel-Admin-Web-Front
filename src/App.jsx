@@ -24,6 +24,8 @@ import {
   RecuperarPwPersonajeGestion,
   CambiarPinPersonajeGestion,
   CambiarEmailPersonajeGestion,
+  UnbanearPersonajeGestion,
+  DesbloquearPersonajeGestion,
 } from "./components/index";
 import { PrivateRoute } from "./utils/PrivateRoute";
 
@@ -75,6 +77,10 @@ function App() {
                 element={<BuscarPersonajeGestion />}
               />
               <Route
+                path="gestion-unbanear-personaje"
+                element={<UnbanearPersonajeGestion />}
+              />
+              <Route
                 path="gestion-recuperar-pass-personaje"
                 element={<RecuperarPwPersonajeGestion />}
               />
@@ -85,6 +91,10 @@ function App() {
               <Route
                 path="gestion-cambiar-pin-personaje"
                 element={<CambiarPinPersonajeGestion />}
+              />
+                            <Route
+                path="gestion-desbloquear-personaje"
+                element={<DesbloquearPersonajeGestion />}
               />
             </Route>
           </Route>

@@ -22,3 +22,5 @@ export { BuscarPersonajeGestion } from "./Panel-Gestion-Personajes/gestion-busca
 export { RecuperarPwPersonajeGestion } from "./Panel-Gestion-Personajes/gestion-recu-pass";
 export { CambiarPinPersonajeGestion } from "./Panel-Gestion-Personajes/gestion-cambiar-pin";
 export { CambiarEmailPersonajeGestion } from "./Panel-Gestion-Personajes/gestion-cambiar-email";
+export { UnbanearPersonajeGestion } from "./Panel-Gestion-Personajes/gestion-unbanear-personaje";
+export { DesbloquearPersonajeGestion } from "./Panel-Gestion-Personajes/gestion-desbloquear-personaje";

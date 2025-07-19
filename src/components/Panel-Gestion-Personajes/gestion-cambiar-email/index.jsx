@@ -19,7 +19,16 @@ const CambiarEmailPersonajeGestion = () => {
         token: personaje.gm,
         email: personaje.emailNuevo,
       });
-      setError(data.message);
+      if (data.error === 0) {
+        setError(data.message);
+        setPersonaje((prev) => ({
+          ...prev,
+          personaje: "",
+          emailNuevo: "",
+        }));
+      } else {
+        setError(data.message);
+      }
     } catch (e) {
       setError("Error al conectarse con el servidor");
     }

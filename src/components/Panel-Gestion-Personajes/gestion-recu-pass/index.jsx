@@ -15,7 +15,15 @@ const RecuperarPwPersonajeGestion = () => {
         nick: personaje.personaje,
         token: personaje.gm,
       });
-      setError(data.message);
+      if (data.error === 0) {
+        setError(data.message);
+        setPersonaje((prev) => ({
+          ...prev,
+          personaje: "",
+        }));
+      } else {
+        setError(data.message);
+      }
     } catch (error) {
       setError("Error al conectarse con el servidor");
       return;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./style.css";
-import { bloquearPersonaje } from "../../../querys/scripts";
+import { desbloquearPersonaje } from "../../../querys/scripts";
 
-const BloquearPersonajeGestion = () => {
+const DesbloquearPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
     gm: localStorage.getItem("token"),
@@ -13,14 +13,13 @@ const BloquearPersonajeGestion = () => {
   async function handleSubmit(e) {
     try {
       e.preventDefault();
-      let bloquear = 1;
-      let data = await bloquearPersonaje({
+      let desbloquear = 0;
+      let data = await desbloquearPersonaje({
         usuario: personaje.personaje,
-        status: bloquear,
-        token: personaje.gm,
+        status: desbloquear,
       });
       if (data.error === 0) {
-        setError("Personaje bloqueado correctamente");
+        setError("Personaje desbloqueado correctamente");
         setPersonaje((prev) => ({
           ...prev,
           personaje: "",
@@ -57,11 +56,11 @@ const BloquearPersonajeGestion = () => {
         {error && <p className="bloquear-error">{error}</p>}
 
         <button type="submit" className="bloquear-button">
-          Bloquear
+          Desbloquear
         </button>
       </form>
     </div>
   );
 };
 
-export { BloquearPersonajeGestion };
+export { DesbloquearPersonajeGestion };

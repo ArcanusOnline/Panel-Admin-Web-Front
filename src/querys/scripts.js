@@ -1,4 +1,5 @@
 let urlBackend = import.meta.env.VITE_URL_BACKEND;
+import { fetchConAuth } from "../utils/fetchConAuth";
 
 async function iniciarSesion(username) {
   try {
@@ -437,6 +438,22 @@ async function bloquearPersonaje({ usuario, status, token }) {
   }
 }
 
+async function desbloquearPersonaje({ usuario, status }) {
+  try {
+    let response = await fetchConAuth(
+      `${urlBackend}/desbloquear-personaje-gestion`,
+      {
+        method: "POST",
+        body: JSON.stringify({ usuario, status }),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error al bloquear personaje:", error.message);
+    return { message: error.message || "Error en la solicitud", error: 1 };
+  }
+}
+
 async function banearPjOfflineGestion({ personaje, motivo, tiempo, gm }) {
   try {
     let response = await fetch(`${urlBackend}/banear-panel-gestion-off`, {
@@ -566,21 +583,38 @@ async function cambiarEmailGestion({ nick, token, email }) {
   }
 }
 
-async function cambiarPinGestion({ nick, token, pinNueva }) {
+async function cambiarPinGestion({ nick, token, pinNueva, numeroSoporte }) {
   try {
-    let response = await fetch(`${urlBackend}/cambiar-pin-gestion`, {
+    let response = await fetchConAuth(`${urlBackend}/cambiar-pin-gestion`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({
         nick,
         pinNueva,
+        numeroSoporte,
       }),
     });
-    let data = await response.json();
-    return data;
+
+    return response;
+  } catch (error) {
+    console.error("Error en cambiarPinGestion:", error);
+    throw error;
+  }
+}
+
+async function unbanearPersonajeGestion({ nick, numeroSoporte }) {
+  try {
+    let response = await fetchConAuth(
+      `${urlBackend}/unbanear-personaje-gestion`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          nick,
+          numeroSoporte,
+        }),
+      }
+    );
+
+    return response;
   } catch (error) {
     console.error("Error en cambiarPinGestion:", error);
     throw error;
@@ -620,5 +654,7 @@ export {
   bloquearPersonaje,
   enviarEmailRecuGestion,
   cambiarEmailGestion,
-  cambiarPinGestion
+  cambiarPinGestion,
+  unbanearPersonajeGestion,
+  desbloquearPersonaje,
 };
