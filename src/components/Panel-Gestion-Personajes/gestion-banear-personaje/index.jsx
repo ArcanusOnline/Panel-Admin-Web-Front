@@ -11,7 +11,7 @@ const BanearPersonajeGestion = () => {
     personaje: "",
     motivo: "",
     tiempo: "",
-    gm: localStorage.getItem("username") || "Administrador",
+    ticket: "",
   });
   const [error, setError] = useState("");
 
@@ -29,7 +29,7 @@ const BanearPersonajeGestion = () => {
             personaje: personaje.personaje,
             motivo: personaje.motivo,
             tiempo: personaje.tiempo,
-            gm: personaje.gm,
+            ticket: personaje.ticket,
           });
           if (data.error == 0) {
             setError("Personaje baneado correctamente");
@@ -38,6 +38,7 @@ const BanearPersonajeGestion = () => {
               personaje: "",
               motivo: "",
               tiempo: "",
+              ticket: "",
             }));
           } else {
             setError(data.msg);
@@ -46,8 +47,8 @@ const BanearPersonajeGestion = () => {
           let baneoOnline = await banearSiEstaOnlinePanelGestion({
             nick: personaje.personaje,
             tiempo: personaje.tiempo,
-            gm: personaje.gm,
             razon: personaje.motivo,
+            ticket: personaje.ticket,
           });
           if (baneoOnline?.status === "ok") {
             setError("Personaje baneado correctamente");
@@ -56,6 +57,7 @@ const BanearPersonajeGestion = () => {
               personaje: "",
               motivo: "",
               tiempo: "",
+              ticket: "",
             }));
             return;
           } else {
@@ -113,6 +115,20 @@ const BanearPersonajeGestion = () => {
             min={0}
             onChange={(e) =>
               setPersonaje((prev) => ({ ...prev, tiempo: e.target.value }))
+            }
+          />
+        </label>
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
             }
           />
         </label>

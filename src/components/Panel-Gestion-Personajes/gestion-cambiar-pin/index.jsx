@@ -6,7 +6,6 @@ const CambiarPinPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
     pinNueva: "",
-    gm: localStorage.getItem("token"),
     numeroSoporte: "",
   });
 
@@ -17,7 +16,6 @@ const CambiarPinPersonajeGestion = () => {
       e.preventDefault();
       let data = await cambiarPinGestion({
         nick: personaje.personaje,
-        token: personaje.gm,
         pinNueva: personaje.pinNueva,
         numeroSoporte: personaje.numeroSoporte,
       });

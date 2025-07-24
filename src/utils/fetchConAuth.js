@@ -16,6 +16,7 @@ export async function fetchConAuth(url, options = {}) {
     if (response.status === 401) {
       // 🔒 Token inválido o expirado → deslogueo forzado
       localStorage.removeItem("token");
+      alert("Token expirado o invalido, vuelva a iniciar sesion")
       window.location.href = "/"; // o usar navigate("/") si estás dentro de React Router
       return;
     }

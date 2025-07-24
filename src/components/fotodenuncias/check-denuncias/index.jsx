@@ -20,7 +20,6 @@ const CheckeoDenuncias = () => {
   let [pena, setPena] = useState({
     nick: "",
     tiempo: 0,
-    gm: localStorage.getItem("username").toLowerCase() || "Administracion",
     razon: "",
     numeroFD: state?.ID,
   });
@@ -76,7 +75,6 @@ const CheckeoDenuncias = () => {
           const banear = await banearSiEstaOnline({
             nick: pena?.nick,
             tiempo: tiempoBan,
-            gm: pena?.gm,
             razon: pena?.razon,
             idPena: pena?.numeroFD,
           });

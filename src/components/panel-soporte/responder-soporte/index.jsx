@@ -11,19 +11,19 @@ const ResponderSoporte = () => {
   let { state } = useLocation();
   const [soporte, setSoporte] = useState([]);
   const [error, setError] = useState("");
-  let responde = localStorage.getItem("username") || "Staff";
+  // let responde = localStorage.getItem("token") || "Staff";
   let id = state.ID || null;
   const [fields, setFields] = useState({
     id,
     respuesta: "",
-    nombre: responde,
-    token: "",
+    // nombre: responde,
+    // token: "",
   });
   useEffect(() => {
-    let selectToken = localStorage.getItem("token") || "";
+    /*  let selectToken = localStorage.getItem("token") || "";
     if (selectToken) {
       setFields((e) => ({ ...e, token: selectToken }));
-    }
+    }*/
     async function getData() {
       let data = await obtenerDataSoporte(id);
       if (data.error) {

@@ -5,7 +5,7 @@ import { bloquearPersonaje } from "../../../querys/scripts";
 const BloquearPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
-    gm: localStorage.getItem("token"),
+    ticket: "",
   });
 
   const [error, setError] = useState("");
@@ -17,13 +17,14 @@ const BloquearPersonajeGestion = () => {
       let data = await bloquearPersonaje({
         usuario: personaje.personaje,
         status: bloquear,
-        token: personaje.gm,
+        ticket: personaje.ticket,
       });
       if (data.error === 0) {
         setError("Personaje bloqueado correctamente");
         setPersonaje((prev) => ({
           ...prev,
           personaje: "",
+          ticket: "",
         }));
       } else {
         setError(data.message);
@@ -53,7 +54,20 @@ const BloquearPersonajeGestion = () => {
             }
           />
         </label>
-
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
+            }
+          />
+        </label>
         {error && <p className="bloquear-error">{error}</p>}
 
         <button type="submit" className="bloquear-button">

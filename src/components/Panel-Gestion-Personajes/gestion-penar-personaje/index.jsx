@@ -11,7 +11,7 @@ const PenarPersonajeGestion = () => {
     personaje: "",
     motivo: "",
     tiempo: "",
-    gm: localStorage.getItem("token"),
+    ticket: "",
   });
   const [error, setError] = useState("");
 
@@ -25,7 +25,7 @@ const PenarPersonajeGestion = () => {
             personaje: personaje.personaje,
             pena: personaje.motivo,
             tiempo: personaje.tiempo,
-            token: personaje.gm,
+            ticket: personaje.ticket,
           });
           if (response.error === 0) {
             setError(response.msg);
@@ -34,6 +34,7 @@ const PenarPersonajeGestion = () => {
               personaje: "",
               motivo: "",
               tiempo: "",
+              ticket: "",
             }));
           } else {
             setError(response.msg);
@@ -42,7 +43,7 @@ const PenarPersonajeGestion = () => {
           let response = await encarcelarPersonajeWebGestionOn({
             nick: personaje.personaje,
             tiempo: personaje.tiempo,
-            gm: personaje.gm,
+            ticket: personaje.ticket,
             razon: personaje.motivo,
           });
           if (response.status === "ok") {
@@ -52,6 +53,7 @@ const PenarPersonajeGestion = () => {
               personaje: "",
               motivo: "",
               tiempo: "",
+              ticket: "",
             }));
           } else {
             setError(response.msg);
@@ -117,6 +119,20 @@ const PenarPersonajeGestion = () => {
                 ...prev,
                 tiempo: e.target.value,
               }))
+            }
+          />
+        </label>
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
             }
           />
         </label>

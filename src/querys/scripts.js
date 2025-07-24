@@ -127,15 +127,14 @@ async function obtenerDataSoporte(id) {
 
 async function responderSoporte(fields) {
   try {
-    let response = await fetch(`${urlBackend}/enviar-respuesta-soporte`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(fields),
-    });
-    let data = await response.json();
-    return data;
+    let response = await fetchConAuth(
+      `${urlBackend}/enviar-respuesta-soporte`,
+      {
+        method: "POST",
+        body: JSON.stringify(fields),
+      }
+    );
+    return response;
   } catch (error) {
     return { message: "Hubo un error al conectarse con el servidor" };
   }
@@ -289,18 +288,21 @@ async function encarcelarPersonajeWeb({ nick, tiempo, gm, razon }) {
   }
 }
 
-async function encarcelarPersonajeWebGestionOn({ nick, tiempo, gm, razon }) {
+async function encarcelarPersonajeWebGestionOn({
+  nick,
+  tiempo,
+  ticket,
+  razon,
+}) {
   try {
-    let response = await fetch(`${urlBackend}/penar-personaje-gestion-on`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${gm}`,
-      },
-      body: JSON.stringify({ nick, tiempo, razon }),
-    });
-    let data = await response.json();
-    return data;
+    let response = await fetchConAuth(
+      `${urlBackend}/penar-personaje-gestion-on`,
+      {
+        method: "POST",
+        body: JSON.stringify({ nick, tiempo, razon, ticket }),
+      }
+    );
+    return response;
   } catch (error) {
     console.error("Error en encarcelarPersonajeWeb:", error);
     throw error;
@@ -309,16 +311,11 @@ async function encarcelarPersonajeWebGestionOn({ nick, tiempo, gm, razon }) {
 
 async function encarcelarPersonajeOffline({ personaje, pena, ban, token }) {
   try {
-    let response = await fetch(`${urlBackend}/penar-personaje-offline`, {
+    let response = await fetchConAuth(`${urlBackend}/penar-personaje-offline`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({ personaje, pena, ban }),
     });
-    let data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.error("Error en encarcelarPersonajeOffline:", error);
     throw error;
@@ -329,36 +326,27 @@ async function encarcelarPersonajeOfflineGestion({
   personaje,
   pena,
   tiempo,
-  token,
+  ticket,
 }) {
   try {
-    let response = await fetch(`${urlBackend}/penar-panel-gestion-off`, {
+    let response = await fetchConAuth(`${urlBackend}/penar-panel-gestion-off`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ personaje, pena, tiempo }),
+      body: JSON.stringify({ personaje, pena, tiempo, ticket }),
     });
-    let data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.error("Error en encarcelarPersonajeOffline:", error);
     throw error;
   }
 }
 
-async function banearSiEstaOnline({ nick, tiempo, gm, razon, idPena }) {
+async function banearSiEstaOnline({ nick, tiempo, razon, idPena }) {
   try {
-    let response = await fetch(`${urlBackend}/banear`, {
+    let response = await fetchConAuth(`${urlBackend}/banear`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nick, tiempo, gm, razon, idPena }),
+      body: JSON.stringify({ nick, tiempo, razon, idPena }),
     });
-    let data = await response.json();
-    if (data.status === "ok") {
+    if (response.status === "ok") {
       let deslogeoRes = await fetch(`${urlBackend}/desloguear`, {
         method: "POST",
         headers: {
@@ -375,17 +363,13 @@ async function banearSiEstaOnline({ nick, tiempo, gm, razon, idPena }) {
   }
 }
 
-async function banearSiEstaOnlinePanelGestion({ nick, tiempo, gm, razon }) {
+async function banearSiEstaOnlinePanelGestion({ nick, tiempo, razon, ticket }) {
   try {
-    let response = await fetch(`${urlBackend}/banear-online-gestion`, {
+    let response = await fetchConAuth(`${urlBackend}/banear-online-gestion`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nick, tiempo, gm, razon }),
+      body: JSON.stringify({ nick, tiempo, razon, ticket }),
     });
-    let data = await response.json();
-    if (data.status === "ok") {
+    if (response.status === "ok") {
       let deslogeoRes = await fetch(`${urlBackend}/desloguear`, {
         method: "POST",
         headers: {
@@ -402,49 +386,26 @@ async function banearSiEstaOnlinePanelGestion({ nick, tiempo, gm, razon }) {
   }
 }
 
-async function deslogearPersonajeGestion({ nick, token }) {
+async function deslogearPersonajeGestion({ nick, ticket }) {
   try {
-    let deslogeoRes = await fetch(`${urlBackend}/desloguear`, {
+    let deslogeoRes = await fetchConAuth(`${urlBackend}/desloguear`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ nick }),
+      body: JSON.stringify({ nick, ticket }),
     });
-    let deslogeoData = await deslogeoRes.json();
-    return deslogeoData;
+    return deslogeoRes;
   } catch (error) {
     console.error("Error en deslogearPersonajeGestion:", error);
     throw error;
   }
 }
 
-async function bloquearPersonaje({ usuario, status, token }) {
-  try {
-    let response = await fetch(`${urlBackend}/bloquear-personaje-panel`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ usuario, status }),
-    });
-    let data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error al bloquear personaje:", error.message);
-    return { message: error.message || "Error en la solicitud", error: 1 };
-  }
-}
-
-async function desbloquearPersonaje({ usuario, status }) {
+async function bloquearPersonaje({ usuario, status, ticket }) {
   try {
     let response = await fetchConAuth(
-      `${urlBackend}/desbloquear-personaje-gestion`,
+      `${urlBackend}/bloquear-personaje-panel`,
       {
         method: "POST",
-        body: JSON.stringify({ usuario, status }),
+        body: JSON.stringify({ usuario, status, ticket }),
       }
     );
     return response;
@@ -454,17 +415,32 @@ async function desbloquearPersonaje({ usuario, status }) {
   }
 }
 
-async function banearPjOfflineGestion({ personaje, motivo, tiempo, gm }) {
+async function desbloquearPersonaje({ usuario, status, ticket }) {
   try {
-    let response = await fetch(`${urlBackend}/banear-panel-gestion-off`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ personaje, motivo, tiempo, gm }),
-    });
-    let data = await response.json();
-    return data;
+    let response = await fetchConAuth(
+      `${urlBackend}/desbloquear-personaje-gestion`,
+      {
+        method: "POST",
+        body: JSON.stringify({ usuario, status, ticket }),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error al bloquear personaje:", error.message);
+    return { message: error.message || "Error en la solicitud", error: 1 };
+  }
+}
+
+async function banearPjOfflineGestion({ personaje, motivo, tiempo, ticket }) {
+  try {
+    let response = await fetchConAuth(
+      `${urlBackend}/banear-panel-gestion-off`,
+      {
+        method: "POST",
+        body: JSON.stringify({ personaje, motivo, tiempo, ticket }),
+      }
+    );
+    return response;
   } catch (error) {
     console.error("Error en banearPjOfflineGestion:", error);
     throw error;
@@ -542,48 +518,40 @@ async function ingresarRolGm(fields) {
   }
 }
 
-async function enviarEmailRecuGestion({ nick, token }) {
+async function enviarEmailRecuGestion({ nick, ticket }) {
   try {
-    let response = await fetch(`${urlBackend}/enviar-recupass-gestion`, {
+    let response = await fetchConAuth(`${urlBackend}/enviar-recupass-gestion`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({
         nick,
+        ticket,
       }),
     });
-    let data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.error("Error en enviarEmailRecuGestion:", error);
     throw error;
   }
 }
 
-async function cambiarEmailGestion({ nick, token, email }) {
+async function cambiarEmailGestion({ nick, email, ticket }) {
   try {
-    let response = await fetch(`${urlBackend}/cambiar-email-gestion`, {
+    let response = await fetchConAuth(`${urlBackend}/cambiar-email-gestion`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
       body: JSON.stringify({
         nick,
         email,
+        ticket,
       }),
     });
-    let data = await response.json();
-    return data;
+    return response;
   } catch (error) {
     console.error("Error en cambiarEmailGestion:", error);
     throw error;
   }
 }
 
-async function cambiarPinGestion({ nick, token, pinNueva, numeroSoporte }) {
+async function cambiarPinGestion({ nick, pinNueva, numeroSoporte }) {
   try {
     let response = await fetchConAuth(`${urlBackend}/cambiar-pin-gestion`, {
       method: "POST",
@@ -613,11 +581,42 @@ async function unbanearPersonajeGestion({ nick, numeroSoporte }) {
         }),
       }
     );
-
     return response;
   } catch (error) {
     console.error("Error en cambiarPinGestion:", error);
     throw error;
+  }
+}
+
+async function traerInfoIndividual(nombre) {
+  try {
+    const response = await fetchConAuth(
+      `${urlBackend}/cargar-stats-personaje`,
+      {
+        method: "POST",
+        body: JSON.stringify({ nombre }),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error de red al conectarse con el servidor:", error);
+    return { message: "Error de red o del servidor", error: true };
+  }
+}
+
+async function chequeoPinPanel({ pin, pj }) {
+  try {
+    const response = await fetchConAuth(
+      `${urlBackend}/chequear-pin-personaje`,
+      {
+        method: "POST",
+        body: JSON.stringify({ pin, pj }),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error de red al conectarse con el servidor:", error);
+    return { message: "Error de red o del servidor", error: true };
   }
 }
 
@@ -657,4 +656,6 @@ export {
   cambiarPinGestion,
   unbanearPersonajeGestion,
   desbloquearPersonaje,
+  traerInfoIndividual,
+  chequeoPinPanel,
 };

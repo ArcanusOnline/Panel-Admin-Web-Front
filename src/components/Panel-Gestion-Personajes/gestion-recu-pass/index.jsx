@@ -5,7 +5,7 @@ import { enviarEmailRecuGestion } from "../../../querys/scripts";
 const RecuperarPwPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
-    gm: localStorage.getItem("token"),
+    ticket: "",
   });
 
   async function handleSubmit(e) {
@@ -13,13 +13,14 @@ const RecuperarPwPersonajeGestion = () => {
       e.preventDefault();
       let data = await enviarEmailRecuGestion({
         nick: personaje.personaje,
-        token: personaje.gm,
+        ticket: personaje.ticket,
       });
       if (data.error === 0) {
         setError(data.message);
         setPersonaje((prev) => ({
           ...prev,
           personaje: "",
+          ticket: "",
         }));
       } else {
         setError(data.message);
@@ -48,6 +49,20 @@ const RecuperarPwPersonajeGestion = () => {
                 ...prev,
                 personaje: e.target.value,
               }))
+            }
+          />
+        </label>
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
             }
           />
         </label>

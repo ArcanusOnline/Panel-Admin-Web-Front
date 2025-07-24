@@ -5,7 +5,7 @@ import { desbloquearPersonaje } from "../../../querys/scripts";
 const DesbloquearPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
-    gm: localStorage.getItem("token"),
+    ticket: "",
   });
 
   const [error, setError] = useState("");
@@ -17,12 +17,14 @@ const DesbloquearPersonajeGestion = () => {
       let data = await desbloquearPersonaje({
         usuario: personaje.personaje,
         status: desbloquear,
+        ticket: personaje.ticket,
       });
       if (data.error === 0) {
         setError("Personaje desbloqueado correctamente");
         setPersonaje((prev) => ({
           ...prev,
           personaje: "",
+          ticket: "",
         }));
       } else {
         setError(data.message);
@@ -49,6 +51,20 @@ const DesbloquearPersonajeGestion = () => {
                 ...prev,
                 personaje: e.target.value,
               }))
+            }
+          />
+        </label>
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
             }
           />
         </label>

@@ -6,7 +6,7 @@ const CambiarEmailPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
     emailNuevo: "",
-    gm: localStorage.getItem("token"),
+    ticket: "",
   });
 
   const [error, setError] = useState("");
@@ -16,7 +16,7 @@ const CambiarEmailPersonajeGestion = () => {
       e.preventDefault();
       let data = await cambiarEmailGestion({
         nick: personaje.personaje,
-        token: personaje.gm,
+        ticket: personaje.ticket,
         email: personaje.emailNuevo,
       });
       if (data.error === 0) {
@@ -25,6 +25,7 @@ const CambiarEmailPersonajeGestion = () => {
           ...prev,
           personaje: "",
           emailNuevo: "",
+          ticket: "",
         }));
       } else {
         setError(data.message);
@@ -67,6 +68,20 @@ const CambiarEmailPersonajeGestion = () => {
                 ...prev,
                 emailNuevo: e.target.value,
               }))
+            }
+          />
+        </label>
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
             }
           />
         </label>

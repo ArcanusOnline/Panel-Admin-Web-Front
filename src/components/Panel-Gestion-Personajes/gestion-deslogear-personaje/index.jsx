@@ -5,7 +5,7 @@ import { deslogearPersonajeGestion } from "../../../querys/scripts";
 const DeslogearPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
-    gm: localStorage.getItem("token"),
+    ticket: "",
   });
   const [error, setError] = useState("");
 
@@ -14,13 +14,14 @@ const DeslogearPersonajeGestion = () => {
       e.preventDefault();
       let data = await deslogearPersonajeGestion({
         nick: personaje.personaje,
-        token: personaje.gm,
+        ticket: personaje.ticket,
       });
       if (data.status === "ok") {
         setError(data.mensaje);
         setPersonaje((prev) => ({
           ...prev,
           personaje: "",
+          ticket: "",
         }));
       } else {
         setError(data.msg);
@@ -47,6 +48,20 @@ const DeslogearPersonajeGestion = () => {
                 ...prev,
                 personaje: e.target.value,
               }))
+            }
+          />
+        </label>
+        <label htmlFor="nroSoporte" className="banear-label">
+          Numero de Soporte
+          <input
+            type="number"
+            name="nroSoporte"
+            id="nroSoporte"
+            className="banear-input"
+            value={personaje.ticket}
+            min={0}
+            onChange={(e) =>
+              setPersonaje((prev) => ({ ...prev, ticket: e.target.value }))
             }
           />
         </label>

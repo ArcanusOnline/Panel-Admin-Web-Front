@@ -6,7 +6,6 @@ const UnbanearPersonajeGestion = () => {
   const [personaje, setPersonaje] = useState({
     personaje: "",
     numeroSoporte: "",
-    gm: localStorage.getItem("token"),
   });
   const [error, setError] = useState("");
 
